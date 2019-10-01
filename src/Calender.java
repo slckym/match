@@ -2,12 +2,15 @@ import javax.swing.*;
 
 public class Calender extends JDialog {
     private JPanel contentPane;
-    private JTextField textField2;
-    private JTextField textField1;
-    private JTable table1;
+    private JComboBox cmbTeamFirst;
+    private JComboBox cmbTeamSecond;
+    private JTable tblResults;
+    private JButton btnFilter;
+    private JLabel lblTeamFirst;
+    private JLabel lblTeamSecond;
     private JButton buttonOK;
 
-    public Calender() {
+    private Calender() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
