@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.xml.crypto.Data;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Calender extends JDialog {
     private JPanel contentPane;
@@ -11,15 +15,25 @@ public class Calender extends JDialog {
     private JButton buttonOK;
 
     private Calender() {
+        initialize();
+        try {
+            Helper.fillCombobox(cmbTeamFirst);
+            Helper.fillCombobox(cmbTeamSecond);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initialize() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        setBounds(100, 100, 620, 500);
+        setTitle("Calender");
         Helper.centreWindow(this);
     }
 
     public static void main(String[] args) {
         Calender dialog = new Calender();
-        dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
     }

@@ -2,7 +2,7 @@ import java.sql.*;
 
 class Database {
 
-    private Connection connection;
+    private Connection connection = null;
 
     private Database() {
 
@@ -20,16 +20,47 @@ class Database {
     static boolean login(String username, String password) throws Exception {
         Database db = new Database();
         String sql = String.format("SELECT * FROM users WHERE username = '%s' AND password = '%s' ", username, password);
-        var stmt = db.connection.prepareStatement(sql);
+        var statement = db.connection.prepareStatement(sql);
 
-        try (ResultSet resultSet = stmt.executeQuery()) {
+        try (ResultSet resultSet = statement.executeQuery()) {
             return resultSet.next();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            stmt.close();
+            statement.close();
             db.connection.close();
         }
 
         return false;
+    }
+
+    static int getTeamId(String teamName) throws Exception {
+        Database db = new Database();
+        String query = String.format("SELECT * FROM teams WHERE team_name = '%s'", teamName);
+        var statement = db.connection.prepareStatement(query);
+
+        try (ResultSet result = statement.executeQuery()) {
+            if (result.next()) {
+                return Integer.parseInt(result.getString("id"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            statement.close();
+        }
+
+        return 0;
+    }
+
+    static ResultSet getAllTeams() {
+        try {
+            Database db = new Database();
+            String query = "SELECT * FROM teams";
+
+            PreparedStatement state = db.connection.prepareStatement(query);
+            return state.executeQuery();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }
