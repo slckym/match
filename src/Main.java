@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main extends JDialog {
     private JPanel contentPane;
@@ -12,13 +14,17 @@ public class Main extends JDialog {
             setVisible(false);
             Calender.visible(true);
         });
+        btnMatchAdditions.addActionListener(actionEvent -> {
+            setVisible(false);
+            Addition.visible(true);
+        });
     }
 
     private void initialize() {
         setContentPane(contentPane);
         setModal(true);
         setBounds(100, 100, 320, 300);
-        setTitle("Main");
+        setTitle("Selection Page");
         Helper.centreWindow(this);
     }
 

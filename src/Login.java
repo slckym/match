@@ -26,6 +26,7 @@ public class Login extends JDialog {
         });
     }
 
+
     private void initialize() {
         setTitle("Login");
         setContentPane(pnlLogin);
@@ -44,6 +45,13 @@ public class Login extends JDialog {
 
         // call onCancel() on ESCAPE
         pnlLogin.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        pnlLogin.registerKeyboardAction(e -> {
+            try {
+                UserLogin();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         btnLogin.addActionListener(e -> {
             try {
@@ -56,7 +64,7 @@ public class Login extends JDialog {
 
     private void UserLogin() throws Exception {
         var username = txtUsername.getText();
-        @Deprecated
+        @SuppressWarnings("deprecation")
         var password = txtPassword.getText();
         boolean status = Database.login(username, password);
         if (status) {

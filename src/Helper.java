@@ -18,7 +18,7 @@ class Helper {
         frame.setLocation(x, y);
     }
 
-    static void showDialog(String message) {
+    static void showDialog(@SuppressWarnings("SameParameterValue") String message) {
         JOptionPane.showMessageDialog(
                 ((Supplier<JDialog>) () -> {
                     final JDialog dialog = new JDialog();
@@ -31,6 +31,7 @@ class Helper {
     static void fillCombobox(JComboBox cmb) throws SQLException {
         var teams = Database.getAllTeams();
         while (Objects.requireNonNull(teams).next()) {
+            //noinspection unchecked
             cmb.addItem(teams.getString("team_name"));
         }
     }

@@ -4,16 +4,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class Calender extends JDialog {
-    private JPanel pnlCalender;
+public class Addition extends JDialog {
+    private JPanel pnlAddition;
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
-    private JTable tblResults;
-    private JButton btnFilter;
-    private JLabel lblTeamFirst;
-    private JLabel lblTeamSecond;
+    private JButton btnSave;
+    private JButton btnNew;
+    private JTextField txtFPTeamFirst;
+    private JTextField txtFPTeamSecond;
+    private JFormattedTextField txtMatchDate;
+    private JTextField txtSPTeamFirst;
+    private JTextField txtSPTeamSecond;
 
-    private Calender() {
+    public Addition() {
         initialize();
         try {
             Helper.fillCombobox(cmbTeamFirst);
@@ -24,17 +27,18 @@ public class Calender extends JDialog {
     }
 
     private void initialize() {
-        setContentPane(pnlCalender);
+        setContentPane(pnlAddition);
         setModal(true);
-        setBounds(100, 100, 620, 500);
-        setTitle("Match Calender");
-        Helper.centreWindow(this);
+        setTitle("Match Addition");
+        setBounds(100, 100, 500, 300);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
             }
         });
-        pnlCalender.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        pnlAddition.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        Helper.centreWindow(this);
+
     }
 
     private void onCancel() {
@@ -43,14 +47,13 @@ public class Calender extends JDialog {
     }
 
     public static void main(String[] args) {
-        Calender.visible(true);
+        Addition.visible(true);
     }
 
     @SuppressWarnings("SameParameterValue")
     static void visible(boolean b) {
-        Calender calender = new Calender();
-        calender.setVisible(b);
+        Addition dialog = new Addition();
+        dialog.setVisible(true);
         System.exit(0);
     }
-
 }
