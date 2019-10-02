@@ -1,11 +1,9 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main extends JDialog {
     private JPanel contentPane;
     private JButton btnMatchAdditions;
-    private JButton btnPosibilities;
+    private JButton btnPossibilities;
     private JButton btnCalender;
 
     private Main() {
@@ -17,6 +15,10 @@ public class Main extends JDialog {
         btnMatchAdditions.addActionListener(actionEvent -> {
             setVisible(false);
             Addition.visible(true);
+        });
+        btnPossibilities.addActionListener(actionEvent -> {
+            setVisible(false);
+            Possibilities.visible(true);
         });
     }
 

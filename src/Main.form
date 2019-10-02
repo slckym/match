@@ -27,13 +27,13 @@
               <text value="Match Addition"/>
             </properties>
           </component>
-          <component id="b5c1a" class="javax.swing.JButton" binding="btnPosibilities">
+          <component id="b5c1a" class="javax.swing.JButton" binding="btnPossibilities">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <margin top="10" left="10" bottom="10" right="10"/>
-              <text value="Posibilities"/>
+              <text value="Possibilities"/>
             </properties>
           </component>
           <component id="c0a41" class="javax.swing.JButton" binding="btnCalender">

@@ -1,20 +1,22 @@
+import javafx.scene.control.DatePicker;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 public class Addition extends JDialog {
     private JPanel pnlAddition;
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
     private JButton btnSave;
-    private JButton btnNew;
     private JTextField txtFPTeamFirst;
     private JTextField txtFPTeamSecond;
-    private JFormattedTextField txtMatchDate;
     private JTextField txtSPTeamFirst;
     private JTextField txtSPTeamSecond;
+    private JTextField txtMatchDate;
 
     public Addition() {
         initialize();
@@ -38,7 +40,6 @@ public class Addition extends JDialog {
         });
         pnlAddition.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         Helper.centreWindow(this);
-
     }
 
     private void onCancel() {
@@ -53,7 +54,7 @@ public class Addition extends JDialog {
     @SuppressWarnings("SameParameterValue")
     static void visible(boolean b) {
         Addition dialog = new Addition();
-        dialog.setVisible(true);
+        dialog.setVisible(b);
         System.exit(0);
     }
 }
