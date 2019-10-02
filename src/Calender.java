@@ -1,4 +1,7 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,8 +18,8 @@ public class Calender extends JFrame {
     private JScrollPane scrollResultTable;
 
     private Calender() {
-        initialize();
         fillResultTable();
+        initialize();
         try {
             Helper.fillCombobox(cmbTeamFirst);
             Helper.fillCombobox(cmbTeamSecond);
@@ -25,22 +28,26 @@ public class Calender extends JFrame {
         }
     }
 
-    @SuppressWarnings("BoundFieldAssignment")
-    private void fillResultTable() {
-        String[][] data = {
-                {"Kundan Kumar Jha", "4031", "CSE"},
-                {"Anand Jha", "6014", "IT"}
-        };
-        String[] columns = {"Name", "Roll Number", "Department"};
+    public static void main(String[] args) {
+        Calender.visible(true);
+    }
 
-        tblResults = new JTable(data, columns);
-        tblResults.setFillsViewportHeight(true);
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Calender calender = new Calender();
+        calender.setVisible(b);
+    }
+
+    private void fillResultTable() {
+
+
     }
 
     private void initialize() {
         setContentPane(pnlCalender);
-        setBounds(100, 100, 620, 500);
+        setSize(620, 500);
         setTitle("Match Calender");
+        setResizable(false);
         Helper.centreWindow(this);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -52,16 +59,6 @@ public class Calender extends JFrame {
 
     private void onCancel() {
         setVisible(false);
-    }
-
-    public static void main(String[] args) {
-        Calender.visible(true);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Calender calender = new Calender();
-        calender.setVisible(b);
     }
 
 }
