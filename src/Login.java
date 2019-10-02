@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Login extends JDialog {
+public class Login extends JFrame {
     private JPasswordField txtPassword;
     private JTextField txtUsername;
     private JButton btnLogin;
@@ -30,7 +30,6 @@ public class Login extends JDialog {
     private void initialize() {
         setTitle("Login");
         setContentPane(pnlLogin);
-        setModal(true);
         setResizable(false);
         setBounds(100, 100, 320, 155);
         Helper.centreWindow(this);
@@ -86,6 +85,5 @@ public class Login extends JDialog {
     private static void visible(boolean b) {
         Login login = new Login();
         login.setVisible(true);
-        System.exit(0);
     }
 }

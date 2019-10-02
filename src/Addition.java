@@ -7,7 +7,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
-public class Addition extends JDialog {
+public class Addition extends JFrame {
     private JPanel pnlAddition;
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
@@ -30,7 +30,6 @@ public class Addition extends JDialog {
 
     private void initialize() {
         setContentPane(pnlAddition);
-        setModal(true);
         setTitle("Match Addition");
         setBounds(100, 100, 500, 300);
         addWindowListener(new WindowAdapter() {
@@ -44,7 +43,6 @@ public class Addition extends JDialog {
 
     private void onCancel() {
         setVisible(false);
-        Main.visible(true);
     }
 
     public static void main(String[] args) {
@@ -55,6 +53,5 @@ public class Addition extends JDialog {
     static void visible(boolean b) {
         Addition dialog = new Addition();
         dialog.setVisible(b);
-        System.exit(0);
     }
 }

@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Possibilities extends JDialog {
+public class Possibilities extends JFrame {
     private JPanel pnlPossibilities;
 
     public Possibilities() {
@@ -16,8 +16,7 @@ public class Possibilities extends JDialog {
 
     private void initialize() {
         setContentPane(pnlPossibilities);
-        setModal(true);
-        setTitle("Match Addition");
+        setTitle("Possibilities");
         setBounds(100, 100, 500, 300);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -30,13 +29,11 @@ public class Possibilities extends JDialog {
 
     private void onCancel() {
         setVisible(false);
-        Main.visible(true);
     }
 
     @SuppressWarnings("SameParameterValue")
     static void visible(boolean b) {
         Possibilities dialog = new Possibilities();
         dialog.setVisible(b);
-        System.exit(0);
     }
 }
