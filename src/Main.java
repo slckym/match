@@ -12,7 +12,11 @@ public class Main extends JFrame {
     private Main() {
         initialize();
         btnCalender.addActionListener(actionEvent -> {
-            Calender.visible(true);
+            try {
+                Calender.visible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         btnMatchAdditions.addActionListener(actionEvent -> {
             Addition.visible(true);

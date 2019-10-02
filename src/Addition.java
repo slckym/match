@@ -1,11 +1,11 @@
-import javafx.scene.control.DatePicker;
-
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class Addition extends JFrame {
     private JPanel pnlAddition;
@@ -17,6 +17,11 @@ public class Addition extends JFrame {
     private JTextField txtSPTeamFirst;
     private JTextField txtSPTeamSecond;
     private JTextField txtMatchDate;
+    private JLabel lblCmbTeamFirst;
+    private JLabel lblCmbTeamSecond;
+    private JLabel lblFPMS;
+    private JLabel lblSPMS;
+    private JLabel lblMatchDate;
 
     public Addition() {
         initialize();
@@ -26,6 +31,13 @@ public class Addition extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        btnSave.addActionListener(e -> {
+            try {
+                validateMatchAddition();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     private void initialize() {
@@ -53,5 +65,85 @@ public class Addition extends JFrame {
     static void visible(boolean b) {
         Addition dialog = new Addition();
         dialog.setVisible(b);
+    }
+
+    private void validateMatchAddition() throws Exception {
+
+        if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
+            Helper.showDialog("Select diffrent team");
+            lblCmbTeamSecond.setForeground(Color.red);
+            lblCmbTeamFirst.setForeground(Color.red);
+            cmbTeamSecond.requestFocus();
+        } else if (txtFPTeamFirst.getText().isEmpty() || txtFPTeamSecond.getText().isEmpty()) {
+            Helper.showDialog("First period score is required");
+            lblFPMS.setForeground(Color.red);
+            txtFPTeamFirst.requestFocus();
+        } else if (txtSPTeamFirst.getText().isEmpty() || txtSPTeamSecond.getText().isEmpty()) {
+            Helper.showDialog("Second period score is required");
+            lblSPMS.setForeground(Color.red);
+            txtSPTeamFirst.requestFocus();
+        } else if (txtMatchDate.getText().isEmpty()) {
+            Helper.showDialog("Match date is required");
+            lblMatchDate.setForeground(Color.red);
+            txtMatchDate.requestFocus();
+
+        } else {
+            insertMatchAddition();
+        }
+    }
+
+    private void insertMatchAddition() {
+        PreparedStatement state = null;
+        int rs = 0;
+        try {
+            int teamFirstID = Database.getTeamId(Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString());
+            int teamSecondID = Database.getTeamId(Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString());
+
+            int fpTeamFirst = Integer.parseInt(txtFPTeamFirst.getText());
+            int fpTeamSecond = Integer.parseInt(txtFPTeamSecond.getText());
+
+            int spTeamFirst = Integer.parseInt(txtSPTeamFirst.getText());
+            int spTeamSecond = Integer.parseInt(txtSPTeamSecond.getText());
+
+            String query = String.format(
+                    "INSERT INTO match_additions (team1_id, team2_id, fp_team1_score, fp_team2_score, sp_team1_score, sp_team2_score, ms_team1, ms_team2, match_date)"
+                            + " VALUES( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+                    teamFirstID, teamSecondID, fpTeamFirst, fpTeamSecond, spTeamFirst, spTeamSecond,
+                    (fpTeamFirst + spTeamFirst), (fpTeamSecond + spTeamSecond), txtMatchDate.getText());
+
+            Database db = new Database();
+            state = db.connection.prepareStatement(query);
+            rs = state.executeUpdate();
+
+            if (rs > 0) {
+                Helper.showDialog("Match added!");
+                clearInput();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (state != null) {
+                try {
+                    state.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void clearInput() {
+        cmbTeamFirst.setSelectedIndex(0);
+        cmbTeamSecond.setSelectedIndex(0);
+        txtFPTeamFirst.setText(null);
+        txtFPTeamSecond.setText(null);
+        txtSPTeamFirst.setText(null);
+        txtSPTeamSecond.setText(null);
+        txtMatchDate.setText(null);
+        lblCmbTeamFirst.setForeground(Color.black);
+        lblCmbTeamSecond.setForeground(Color.black);
+        lblFPMS.setForeground(Color.black);
+        lblSPMS.setForeground(Color.black);
+        lblMatchDate.setForeground(Color.black);
     }
 }

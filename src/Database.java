@@ -2,9 +2,9 @@ import java.sql.*;
 
 class Database {
 
-    private Connection connection = null;
+    Connection connection = null;
 
-    private Database() {
+    Database() {
 
         try {
             Class.forName("org.sqlite.JDBC");

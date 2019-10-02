@@ -16,7 +16,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="46d26" class="javax.swing.JLabel">
+          <component id="46d26" class="javax.swing.JLabel" binding="lblCmbTeamSecond">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -25,7 +25,7 @@
               <text value="Team First"/>
             </properties>
           </component>
-          <component id="e1721" class="javax.swing.JLabel">
+          <component id="e1721" class="javax.swing.JLabel" binding="lblCmbTeamFirst">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -71,7 +71,7 @@
               <text value="Results"/>
             </properties>
           </component>
-          <component id="12bee" class="javax.swing.JLabel">
+          <component id="12bee" class="javax.swing.JLabel" binding="lblFPMS">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -80,7 +80,7 @@
               <text value="First Period Match Score"/>
             </properties>
           </component>
-          <component id="5ed90" class="javax.swing.JLabel">
+          <component id="5ed90" class="javax.swing.JLabel" binding="lblSPMS">
             <constraints>
               <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -89,7 +89,7 @@
               <text value="Second Period Math Score"/>
             </properties>
           </component>
-          <component id="986af" class="javax.swing.JLabel">
+          <component id="986af" class="javax.swing.JLabel" binding="lblMatchDate">
             <constraints>
               <grid row="7" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
