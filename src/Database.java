@@ -9,8 +9,6 @@ class Database {
         try {
             Class.forName("org.sqlite.JDBC");
             this.connection = DriverManager.getConnection("jdbc:sqlite:Match.db");
-            System.out.println("Opened database successfully");
-
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);

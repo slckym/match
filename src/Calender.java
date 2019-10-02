@@ -75,7 +75,7 @@ public class Calender extends JFrame {
 
     private void initialize() {
         setContentPane(pnlCalender);
-        setSize(620, 500);
+        setSize(960, 700);
         setTitle("Match Calender");
         setResizable(false);
         Helper.centreWindow(this);
