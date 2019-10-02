@@ -19,9 +19,7 @@ public class Login extends JDialog {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
             try {
-                Login login = new Login();
-                login.setVisible(true);
-                System.exit(0);
+                Login.visible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -63,8 +61,7 @@ public class Login extends JDialog {
         boolean status = Database.login(username, password);
         if (status) {
             setVisible(false);
-            Main mainForm = new Main();
-            mainForm.setVisible(true);
+            Main.visible(true);
         } else {
             lblUsername.setForeground(Color.RED);
             lblPassword.setForeground(Color.RED);
@@ -75,5 +72,12 @@ public class Login extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private static void visible(boolean b) {
+        Login login = new Login();
+        login.setVisible(true);
+        System.exit(0);
     }
 }

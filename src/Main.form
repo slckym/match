@@ -49,4 +49,8 @@
       </grid>
     </children>
   </grid>
+  <inspectionSuppressions>
+    <suppress inspection="I18nForm"/>
+    <suppress inspection="MissingMnemonic"/>
+  </inspectionSuppressions>
 </form>

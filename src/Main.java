@@ -5,9 +5,16 @@ public class Main extends JDialog {
     private JButton btnMatchAdditions;
     private JButton btnPosibilities;
     private JButton btnCalender;
-    private JButton buttonOK;
 
-    Main() {
+    private Main() {
+        initialize();
+        btnCalender.addActionListener(actionEvent -> {
+            setVisible(false);
+            Calender.visible(true);
+        });
+    }
+
+    private void initialize() {
         setContentPane(contentPane);
         setModal(true);
         setBounds(100, 100, 320, 300);
@@ -16,8 +23,13 @@ public class Main extends JDialog {
     }
 
     public static void main(String[] args) {
-        Main dialog = new Main();
-        dialog.setVisible(true);
+        Main.visible(true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Main main = new Main();
+        main.setVisible(b);
         System.exit(0);
     }
 }
