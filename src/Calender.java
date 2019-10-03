@@ -25,13 +25,10 @@ public class Calender extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        btnFilter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString();
-                String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
-                fillMatchTableRecords(teamFirst, teamSecond);
-            }
+        btnFilter.addActionListener(e -> {
+            String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString();
+            String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
+            fillMatchTableRecords(teamFirst, teamSecond);
         });
     }
 
