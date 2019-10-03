@@ -70,7 +70,7 @@ public class Addition extends JFrame {
     private void validateMatchAddition() throws Exception {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
-            Helper.showDialog("Select diffrent team");
+            Helper.showDialog("Select different team");
             lblCmbTeamSecond.setForeground(Color.red);
             lblCmbTeamFirst.setForeground(Color.red);
             cmbTeamSecond.requestFocus();

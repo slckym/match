@@ -16,7 +16,7 @@ public class Calender extends JFrame {
     private JLabel lblTeamSecond;
     private JScrollPane scrollResultTable;
 
-    private Calender() throws Exception {
+    private Calender() {
         fillMatchTableRecords(null, null);
         initialize();
         try {
@@ -65,7 +65,7 @@ public class Calender extends JFrame {
     }
 
     @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) throws Exception {
+    static void visible(boolean b) {
         Calender calender = new Calender();
         calender.setVisible(b);
     }
