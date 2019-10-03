@@ -40,6 +40,16 @@ public class Addition extends JFrame {
         });
     }
 
+    public static void main(String[] args) {
+        Addition.visible(true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Addition dialog = new Addition();
+        dialog.setVisible(b);
+    }
+
     private void initialize() {
         setContentPane(pnlAddition);
         setTitle("Match Addition");
@@ -55,16 +65,6 @@ public class Addition extends JFrame {
 
     private void onCancel() {
         setVisible(false);
-    }
-
-    public static void main(String[] args) {
-        Addition.visible(true);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Addition dialog = new Addition();
-        dialog.setVisible(b);
     }
 
     private void validateMatchAddition() throws Exception {

@@ -26,6 +26,11 @@ public class Login extends JFrame {
         });
     }
 
+    @SuppressWarnings("SameParameterValue")
+    private static void visible(boolean b) {
+        Login login = new Login();
+        login.setVisible(true);
+    }
 
     private void initialize() {
         setTitle("Login");
@@ -79,11 +84,5 @@ public class Login extends JFrame {
     private void onCancel() {
         // add your code here if necessary
         dispose();
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static void visible(boolean b) {
-        Login login = new Login();
-        login.setVisible(true);
     }
 }

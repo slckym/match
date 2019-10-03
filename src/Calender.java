@@ -1,10 +1,13 @@
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class Calender extends JFrame {
     private JPanel pnlCalender;
@@ -30,6 +33,33 @@ public class Calender extends JFrame {
             String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
             fillMatchTableRecords(teamFirst, teamSecond);
         });
+        tblResults.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JTable table = (JTable) e.getSource();
+                Point point = e.getPoint();
+                if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+                    int row = table.rowAtPoint(point);
+                    DefaultTableModel model = (DefaultTableModel) tblResults.getModel();
+                    AtomicReferenceArray<Object> result = new AtomicReferenceArray<>(new Object[model.getColumnCount()]);
+                    for (int i = 0; i < model.getColumnCount(); i++) {
+                        result.set(i, model.getValueAt(row, i));
+                    }
+                    int rowId = (int) result.get(0);
+                    Helper.showDialog(String.valueOf(rowId));
+                }
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        Calender.visible(true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Calender calender = new Calender();
+        calender.setVisible(b);
     }
 
     private void fillMatchTableRecords(String teamFirst, String teamSecond) {
@@ -58,16 +88,6 @@ public class Calender extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        Calender.visible(true);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Calender calender = new Calender();
-        calender.setVisible(b);
     }
 
     private void initialize() {
