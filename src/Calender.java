@@ -18,6 +18,7 @@ public class Calender extends JFrame {
     private JLabel lblTeamFirst;
     private JLabel lblTeamSecond;
     private JScrollPane scrollResultTable;
+    private JButton btnAllData;
 
     private Calender() {
         fillMatchTableRecords(null, null);
@@ -25,14 +26,29 @@ public class Calender extends JFrame {
         try {
             Helper.fillCombobox(cmbTeamFirst);
             Helper.fillCombobox(cmbTeamSecond);
+            cmbTeamSecond.setSelectedIndex(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         btnFilter.addActionListener(e -> {
             String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString();
             String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
-            fillMatchTableRecords(teamFirst, teamSecond);
+            if(cmbTeamFirst.getSelectedIndex() != cmbTeamSecond.getSelectedIndex()){
+                fillMatchTableRecords(teamFirst, teamSecond);
+                lblTeamFirst.setForeground(Color.black);
+                lblTeamSecond.setForeground(Color.black);
+            }
+            else{
+                Helper.showDialog("Select different team");
+                lblTeamFirst.setForeground(Color.red);
+                lblTeamSecond.setForeground(Color.red);
+                cmbTeamSecond.requestFocus();
+            }
         });
+         btnAllData.addActionListener(actionEvent -> {
+             fillMatchTableRecords(null, null);
+         });
+        tblResults.setDefaultEditor(Object.class, null);
         tblResults.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
