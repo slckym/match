@@ -14,6 +14,12 @@ public class Possibilities extends JFrame {
         Possibilities.visible(true);
     }
 
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Possibilities dialog = new Possibilities();
+        dialog.setVisible(b);
+    }
+
     private void initialize() {
         setContentPane(pnlPossibilities);
         setTitle("Possibilities");
@@ -29,11 +35,5 @@ public class Possibilities extends JFrame {
 
     private void onCancel() {
         setVisible(false);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Possibilities dialog = new Possibilities();
-        dialog.setVisible(b);
     }
 }

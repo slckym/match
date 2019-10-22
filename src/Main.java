@@ -26,6 +26,16 @@ public class Main extends JFrame {
         });
     }
 
+    public static void main(String[] args) {
+        Main.visible(true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Main main = new Main();
+        main.setVisible(b);
+    }
+
     private void initialize() {
         setContentPane(pnlMain);
         setBounds(100, 100, 320, 300);
@@ -39,15 +49,5 @@ public class Main extends JFrame {
 
         // call onCancel() on ESCAPE
         pnlMain.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
-    public static void main(String[] args) {
-        Main.visible(true);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Main main = new Main();
-        main.setVisible(b);
     }
 }

@@ -40,6 +40,16 @@ public class Addition extends JFrame {
         });
     }
 
+    public static void main(String[] args) {
+        Addition.visible(true);
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) {
+        Addition dialog = new Addition();
+        dialog.setVisible(b);
+    }
+
     private void initialize() {
         setContentPane(pnlAddition);
         setTitle("Match Addition");
@@ -57,20 +67,10 @@ public class Addition extends JFrame {
         setVisible(false);
     }
 
-    public static void main(String[] args) {
-        Addition.visible(true);
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void visible(boolean b) {
-        Addition dialog = new Addition();
-        dialog.setVisible(b);
-    }
-
     private void validateMatchAddition() throws Exception {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
-            Helper.showDialog("Select diffrent team");
+            Helper.showDialog("Select different team");
             lblCmbTeamSecond.setForeground(Color.red);
             lblCmbTeamFirst.setForeground(Color.red);
             cmbTeamSecond.requestFocus();
