@@ -8,6 +8,7 @@ public class Main extends JFrame {
     private JButton btnMatchAdditions;
     private JButton btnPossibilities;
     private JButton btnCalender;
+    private JButton btnLeague;
 
     private Main() {
         initialize();
