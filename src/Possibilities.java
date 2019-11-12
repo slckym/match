@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -60,8 +61,7 @@ public class Possibilities extends JFrame {
             lblCmbTeamSecond.setForeground(Color.red);
             lblCmbTeamFirst.setForeground(Color.red);
             cmbTeamSecond.requestFocus();
-        }
-        else{
+        } else {
             this.getPossibilities();
         }
 
@@ -70,12 +70,27 @@ public class Possibilities extends JFrame {
     private void getPossibilities() throws Exception {
         String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString(),
                 teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
-        calculatePossibilities(teamFirst, teamSecond);
-        Database.fillHistoryTable(teamFirst,teamSecond, tblHistory);
-    }
-
-    private void calculatePossibilities(String teamFirst, String teamSecond) throws Exception {
         PreparedStatement state = Database.matchResults(teamFirst, teamSecond);
+        try (ResultSet rs = state.executeQuery()) {
+            int  totalRows = state.getMaxRows();
+            int teamFirstTotalGoals = 0;
+            int teamSecondTotalGoals = 0;
+            int teamFirstTotalWins = 0;
+            int teamSecondTotalWins = 0;
+            while (rs.next()) {
+
+                if (rs.getString(2).equals(teamFirst)){
+
+                }else{
+
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            state.close();
+        }
+
+        tblHistory.setModel(DbUtils.resultSetToTableModel(state.executeQuery()));
     }
 
     private void initialize() {
