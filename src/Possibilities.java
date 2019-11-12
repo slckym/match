@@ -63,7 +63,7 @@ public class Possibilities extends JFrame {
     private void initialize() {
         setContentPane(pnlPossibilities);
         setTitle("Possibilities");
-        setBounds(100, 100, 500, 300);
+        setBounds(100, 100, 500, 320);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
