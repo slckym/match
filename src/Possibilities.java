@@ -9,9 +9,16 @@ public class Possibilities extends JFrame {
     private JPanel pnlPossibilities;
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
-    private JButton btnFilter;
+    private JButton btnResult;
     private JLabel lblCmbTeamSecond;
     private JLabel lblTeamFirst;
+    private JLabel lbl15UpperDown;
+    private JLabel lbl35UpperDown;
+    private JTabbedPane tabResults;
+    private JTable tblHistory;
+    private JLabel lblOddOrEven;
+    private JLabel lblTotalGoals;
+    private JLabel lblReciprocal;
     private JLabel lblCmbTeamFirst;
 
     public Possibilities() {
@@ -23,7 +30,7 @@ public class Possibilities extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        btnFilter.addActionListener(e -> {
+        btnResult.addActionListener(e -> {
             try {
                 validateMatchAddition();
             } catch (Exception ex) {
