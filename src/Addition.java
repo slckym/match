@@ -28,6 +28,7 @@ public class Addition extends JFrame {
         try {
             Helper.fillCombobox(cmbTeamFirst);
             Helper.fillCombobox(cmbTeamSecond);
+            cmbTeamSecond.setSelectedIndex(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -67,7 +68,7 @@ public class Addition extends JFrame {
         setVisible(false);
     }
 
-    private void validateMatchAddition() throws Exception {
+    private void validateMatchAddition() {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
             Helper.showDialog("Select different team");
@@ -134,7 +135,7 @@ public class Addition extends JFrame {
 
     private void clearInput() {
         cmbTeamFirst.setSelectedIndex(0);
-        cmbTeamSecond.setSelectedIndex(0);
+        cmbTeamSecond.setSelectedIndex(1);
         txtFPTeamFirst.setText(null);
         txtFPTeamSecond.setText(null);
         txtSPTeamFirst.setText(null);
