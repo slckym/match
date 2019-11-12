@@ -1,3 +1,6 @@
+import net.proteanit.sql.DbUtils;
+
+import javax.swing.*;
 import java.sql.*;
 
 class Database {
@@ -60,5 +63,38 @@ class Database {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    static void fillHistoryTable(String teamFirst, String teamSecond, JTable table) {
+        try {
+            PreparedStatement state = matchResults(teamFirst, teamSecond);
+            table.setModel(DbUtils.resultSetToTableModel(state.executeQuery()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static PreparedStatement matchResults(String teamFirst, String teamSecond) throws Exception {
+        Database db = new Database();
+            String query = "SELECT ma.id AS 'ID'," +
+                    "team1.team_name AS 'Team First'," +
+                    "team2.team_name AS 'Team Second'," +
+                    "ma.fp_team1_score || '-' || ma.fp_team2_score AS 'FP Score'," +
+                    "ma.sp_team1_score || '-' || ma.sp_team2_score AS 'SP Score'," +
+                    "ma.ms_team1 || '-' || ma.ms_team2 AS 'MS Score'," +
+                    "ma.match_date AS 'Match Date'" +
+                    " FROM match_additions AS ma" +
+                    " LEFT JOIN teams AS team1 ON team1.id = ma.team1_id" +
+                    " LEFT JOIN teams AS team2 ON team2.id = ma.team2_id";
+            if (teamFirst != null && teamSecond != null) {
+                int teamFirstID = Database.getTeamId(teamFirst);
+                int teamSecondID = Database.getTeamId(teamSecond);
+
+                query += String.format(" WHERE ma.team1_id = '%s' AND ma.team2_id = '%s' ", teamFirstID, teamSecondID);
+                query += String.format(" OR ma.team1_id = '%s' AND ma.team2_id = '%s' ", teamSecondID, teamFirstID);
+            }
+            query += " ORDER BY match_date DESC";
+
+            return db.connection.prepareStatement(query);
     }
 }

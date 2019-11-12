@@ -21,7 +21,7 @@ public class Calender extends JFrame {
     private JButton btnAllData;
 
     private Calender() {
-        fillMatchTableRecords(null, null);
+        Database.fillHistoryTable(null, null, tblResults);
         initialize();
         try {
             Helper.fillCombobox(cmbTeamFirst);
@@ -34,7 +34,7 @@ public class Calender extends JFrame {
             String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString();
             String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
             if(cmbTeamFirst.getSelectedIndex() != cmbTeamSecond.getSelectedIndex()){
-                fillMatchTableRecords(teamFirst, teamSecond);
+                Database.fillHistoryTable(teamFirst, teamSecond, tblResults);
                 lblTeamFirst.setForeground(Color.black);
                 lblTeamSecond.setForeground(Color.black);
             }
@@ -46,7 +46,7 @@ public class Calender extends JFrame {
             }
         });
          btnAllData.addActionListener(actionEvent -> {
-             fillMatchTableRecords(null, null);
+             Database.fillHistoryTable(null, null, tblResults);
          });
         tblResults.setDefaultEditor(Object.class, null);
         tblResults.addMouseListener(new MouseAdapter() {
@@ -76,35 +76,6 @@ public class Calender extends JFrame {
     static void visible(boolean b) {
         Calender calender = new Calender();
         calender.setVisible(b);
-    }
-
-    private void fillMatchTableRecords(String teamFirst, String teamSecond) {
-
-        Database db = new Database();
-        try {
-            String query = "SELECT ma.id AS 'ID'," +
-                    "team1.team_name AS 'Team First'," +
-                    "team2.team_name AS 'Team Second'," +
-                    "ma.fp_team1_score || '-' || ma.fp_team2_score AS 'FP Score'," +
-                    "ma.sp_team1_score || '-' || ma.sp_team2_score AS 'SP Score'," +
-                    "ma.ms_team1 || '-' || ma.ms_team2 AS 'MS Score'," +
-                    "ma.match_date AS 'Match Date'" +
-                    " FROM match_additions AS ma" +
-                    " LEFT JOIN teams AS team1 ON team1.id = ma.team1_id" +
-                    " LEFT JOIN teams AS team2 ON team2.id = ma.team2_id";
-            if (teamFirst != null && teamSecond != null) {
-                int teamFirstID = Database.getTeamId(teamFirst);
-                int teamSecondID = Database.getTeamId(teamSecond);
-
-                query += String.format(" WHERE ma.team1_id = '%s' AND ma.team2_id = '%s' ", teamFirstID, teamSecondID);
-            }
-            query += " ORDER BY match_date DESC";
-
-            PreparedStatement state = db.connection.prepareStatement(query);
-            tblResults.setModel(DbUtils.resultSetToTableModel(state.executeQuery()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void initialize() {

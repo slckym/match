@@ -1,9 +1,13 @@
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class Possibilities extends JFrame {
     private JPanel pnlPossibilities;
@@ -32,7 +36,7 @@ public class Possibilities extends JFrame {
         }
         btnResult.addActionListener(e -> {
             try {
-                validateMatchAddition();
+                validatePossibilities();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -49,7 +53,7 @@ public class Possibilities extends JFrame {
         dialog.setVisible(b);
     }
 
-    private void validateMatchAddition() {
+    private void validatePossibilities() throws Exception {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
             Helper.showDialog("Select different team");
@@ -57,7 +61,21 @@ public class Possibilities extends JFrame {
             lblCmbTeamFirst.setForeground(Color.red);
             cmbTeamSecond.requestFocus();
         }
+        else{
+            this.getPossibilities();
+        }
 
+    }
+
+    private void getPossibilities() throws Exception {
+        String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString(),
+                teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
+        calculatePossibilities(teamFirst, teamSecond);
+        Database.fillHistoryTable(teamFirst,teamSecond, tblHistory);
+    }
+
+    private void calculatePossibilities(String teamFirst, String teamSecond) throws Exception {
+        PreparedStatement state = Database.matchResults(teamFirst, teamSecond);
     }
 
     private void initialize() {
