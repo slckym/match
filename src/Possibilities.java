@@ -1,13 +1,35 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 public class Possibilities extends JFrame {
     private JPanel pnlPossibilities;
+    private JComboBox cmbTeamFirst;
+    private JComboBox cmbTeamSecond;
+    private JButton btnFilter;
+    private JLabel lblCmbTeamSecond;
+    private JLabel lblTeamFirst;
+    private JLabel lblCmbTeamFirst;
 
     public Possibilities() {
         initialize();
+        try {
+            Helper.fillCombobox(cmbTeamFirst);
+            Helper.fillCombobox(cmbTeamSecond);
+            cmbTeamSecond.setSelectedIndex(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        btnFilter.addActionListener(e -> {
+            try {
+                validateMatchAddition();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -18,6 +40,17 @@ public class Possibilities extends JFrame {
     static void visible(boolean b) {
         Possibilities dialog = new Possibilities();
         dialog.setVisible(b);
+    }
+
+    private void validateMatchAddition() {
+
+        if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
+            Helper.showDialog("Select different team");
+            lblCmbTeamSecond.setForeground(Color.red);
+            lblCmbTeamFirst.setForeground(Color.red);
+            cmbTeamSecond.requestFocus();
+        }
+
     }
 
     private void initialize() {
@@ -36,4 +69,5 @@ public class Possibilities extends JFrame {
     private void onCancel() {
         setVisible(false);
     }
+
 }
