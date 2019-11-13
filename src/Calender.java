@@ -1,10 +1,7 @@
-import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReferenceArray;
@@ -33,21 +30,20 @@ public class Calender extends JFrame {
         btnFilter.addActionListener(e -> {
             String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString();
             String teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
-            if(cmbTeamFirst.getSelectedIndex() != cmbTeamSecond.getSelectedIndex()){
+            if (cmbTeamFirst.getSelectedIndex() != cmbTeamSecond.getSelectedIndex()) {
                 Database.fillHistoryTable(teamFirst, teamSecond, tblResults);
                 lblTeamFirst.setForeground(Color.black);
                 lblTeamSecond.setForeground(Color.black);
-            }
-            else{
+            } else {
                 Helper.showDialog("Select different team");
                 lblTeamFirst.setForeground(Color.red);
                 lblTeamSecond.setForeground(Color.red);
                 cmbTeamSecond.requestFocus();
             }
         });
-         btnAllData.addActionListener(actionEvent -> {
-             Database.fillHistoryTable(null, null, tblResults);
-         });
+        btnAllData.addActionListener(actionEvent -> {
+            Database.fillHistoryTable(null, null, tblResults);
+        });
         tblResults.setDefaultEditor(Object.class, null);
         tblResults.addMouseListener(new MouseAdapter() {
             @Override
