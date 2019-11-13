@@ -23,7 +23,11 @@ public class Main extends JFrame {
             Addition.visible(true);
         });
         btnPossibilities.addActionListener(actionEvent -> {
-            Possibilities.visible(true);
+            try {
+                Possibilities.visible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
