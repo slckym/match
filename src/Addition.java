@@ -56,7 +56,7 @@ public class Addition extends JFrame {
     private void initialize() {
         setContentPane(pnlAddition);
         setTitle("Match Addition");
-        setBounds(100, 100, 500, 300);
+        setBounds(100, 100, 530, 300);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
