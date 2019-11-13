@@ -29,6 +29,13 @@ public class Main extends JFrame {
                 e.printStackTrace();
             }
         });
+        btnLeague.addActionListener(actionEvent -> {
+            try {
+                League.visible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public static void main(String[] args) {
