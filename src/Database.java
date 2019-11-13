@@ -2,6 +2,7 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class Database {
@@ -109,7 +110,9 @@ class Database {
             query += String.format("WHERE ma.team1_id = '%s' AND ma.team2_id = '%s' ", teamFirstID, teamSecondID);
             query += String.format("OR ma.team1_id = '%s' AND ma.team2_id = '%s' ", teamSecondID, teamFirstID);
         }
-        query += String.format("AND match_date < '%s' ORDER BY match_date DESC", new Date().getTime());
+
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
+        query += String.format("AND match_date < '%s' ORDER BY match_date DESC", date);
 
         return db.connection.prepareStatement(query);
     }

@@ -27,6 +27,7 @@ public class Possibilities extends JFrame {
     private JLabel lblTeamFirstPercent;
     private JLabel lblTeamSecondPercent;
     private JLabel lblResult;
+    private JLabel lblEquality;
     private JLabel lblCmbTeamFirst;
 
     public Possibilities() throws Exception {
@@ -124,29 +125,31 @@ public class Possibilities extends JFrame {
 
             String calculatedTotalGoals = String.valueOf(totalGoals / totalRows);
 
-            double reciprocalPercent = (100 / (double) totalRows) * totalReciprocal,
-                    teamFirstWinPercent = (100 / (double) totalRows) * teamFirstTotalWins,
-                    teamSecondWinPercent = (100 / (double) totalRows) * teamSecondTotalWins;
+            int reciprocalPercent = (100 / totalRows) * totalReciprocal,
+                    teamFirstWinPercent = (100 / totalRows) * teamFirstTotalWins,
+                    teamSecondWinPercent = (100 / totalRows) * teamSecondTotalWins;
 
-            lblReciprocal.setText(reciprocalPercent + "%");
+            lblReciprocal.setText((teamFirstTotalGoals * teamSecondTotalGoals == 0) ? "Yes" : "No");
             lblTeamFirstName.setText(teamFirst);
             lblTeamSecondName.setText(teamSecond);
             lblTeamFirstPercent.setText(teamFirstWinPercent + "%");
             lblTeamSecondPercent.setText(teamSecondWinPercent + "%");
             lblTotalGoals.setText(calculatedTotalGoals);
+            lblEquality.setText(reciprocalPercent + "%");
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
             state.close();
+            clearResults();
+            System.out.println(e.getMessage());
         }
 
         Database.fillHistoryTable(teamFirst, teamSecond, tblHistory);
     }
 
-    private void initialize() throws Exception {
+    private void initialize() {
         setContentPane(pnlPossibilities);
         setTitle("Possibilities");
-        setBounds(100, 100, 530, 330);
+        setBounds(100, 100, 530, 350);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
@@ -158,6 +161,21 @@ public class Possibilities extends JFrame {
 
     private void onCancel() {
         setVisible(false);
+    }
+
+    private void clearResults() {
+        String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString(),
+                teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
+        lblReciprocal.setText("No");
+        lblTeamFirstName.setText(teamFirst);
+        lblTeamSecondName.setText(teamSecond);
+        lblTeamFirstPercent.setText("0%");
+        lblTeamSecondPercent.setText("0%");
+        lblTotalGoals.setText("0");
+        lblEquality.setText("0%");
+        lbl15UpperDown.setText("Down");
+        lbl35UpperDown.setText("Down");
+        lblOddOrEven.setText("Even");
     }
 
 }

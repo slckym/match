@@ -1,3 +1,5 @@
+import com.github.lgooddatepicker.components.DateTimePicker;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,12 +18,12 @@ public class Addition extends JFrame {
     private JTextField txtFPTeamSecond;
     private JTextField txtSPTeamFirst;
     private JTextField txtSPTeamSecond;
-    private JTextField txtMatchDate;
     private JLabel lblCmbTeamFirst;
     private JLabel lblCmbTeamSecond;
     private JLabel lblFPMS;
     private JLabel lblSPMS;
     private JLabel lblMatchDate;
+    private DateTimePicker dtpMatchDate;
 
     public Addition() {
         initialize();
@@ -83,10 +85,14 @@ public class Addition extends JFrame {
             Helper.showDialog("Second period score is required");
             lblSPMS.setForeground(Color.red);
             txtSPTeamFirst.requestFocus();
-        } else if (txtMatchDate.getText().isEmpty()) {
+        } else if (dtpMatchDate.getDatePicker().getText().isEmpty()) {
             Helper.showDialog("Match date is required");
             lblMatchDate.setForeground(Color.red);
-            txtMatchDate.requestFocus();
+            dtpMatchDate.getDatePicker().requestFocus();
+        } else if (dtpMatchDate.getTimePicker().getText().isEmpty()) {
+            Helper.showDialog("Match time is required");
+            lblMatchDate.setForeground(Color.red);
+            dtpMatchDate.getTimePicker().requestFocus();
 
         } else {
             insertMatchAddition();
@@ -106,11 +112,13 @@ public class Addition extends JFrame {
             int spTeamFirst = Integer.parseInt(txtSPTeamFirst.getText());
             int spTeamSecond = Integer.parseInt(txtSPTeamSecond.getText());
 
+            String date = String.format("%s %s", dtpMatchDate.getDatePicker().toString(), dtpMatchDate.getTimePicker().getText());
+
             String query = String.format(
                     "INSERT INTO match_additions (team1_id, team2_id, fp_team1_score, fp_team2_score, sp_team1_score, sp_team2_score, ms_team1, ms_team2, match_date)"
                             + " VALUES( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
                     teamFirstID, teamSecondID, fpTeamFirst, fpTeamSecond, spTeamFirst, spTeamSecond,
-                    (fpTeamFirst + spTeamFirst), (fpTeamSecond + spTeamSecond), txtMatchDate.getText());
+                    (fpTeamFirst + spTeamFirst), (fpTeamSecond + spTeamSecond), date);
 
             Database db = new Database();
             state = db.connection.prepareStatement(query);
@@ -140,7 +148,8 @@ public class Addition extends JFrame {
         txtFPTeamSecond.setText(null);
         txtSPTeamFirst.setText(null);
         txtSPTeamSecond.setText(null);
-        txtMatchDate.setText(null);
+        dtpMatchDate.getDatePicker().setText(null);
+        dtpMatchDate.getTimePicker().setText(null);
         lblCmbTeamFirst.setForeground(Color.black);
         lblCmbTeamSecond.setForeground(Color.black);
         lblFPMS.setForeground(Color.black);
