@@ -1,11 +1,9 @@
-import net.proteanit.sql.DbUtils;
-
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class League extends JFrame {
     private JPanel pnlLeague;
@@ -68,9 +66,30 @@ public class League extends JFrame {
                 "  ) AS tot ON tot.id = t.id " +
                 "GROUP BY Team " +
                 "ORDER BY SUM(P) DESC, S DESC";
-        PreparedStatement state = db.connection.prepareStatement(query);
-        ;
-        tblLeague.setModel(DbUtils.resultSetToTableModel(state.executeQuery()));
+        Statement state = db.connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+        try (ResultSet result = state.executeQuery(query)) {
+            result.last();
+            String[] columns = new String[]{"Team", "W", "G", "V", "DV", "DT", "S", "P"};
+            String[][] tableContents = new String[result.getRow()][8];
+            int i = 0;
+            result.beforeFirst();
+            while (result.next()) {
+                tableContents[i][0] = result.getString(1);
+                tableContents[i][1] = result.getString(2);
+                tableContents[i][2] = result.getString(3);
+                tableContents[i][3] = result.getString(4);
+                tableContents[i][4] = result.getString(5);
+                tableContents[i][5] = result.getString(6);
+                tableContents[i][6] = result.getString(7);
+                tableContents[i][7] = result.getString(8);
+                i++;
+            }
+            DefaultTableModel tableModel = new DefaultTableModel(tableContents, columns);
+            tblLeague.setModel(tableModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //tblLeague.setModel(DbUtils.resultSetToTableModel(state.executeQuery()));
     }
 
     private void initialize() {
