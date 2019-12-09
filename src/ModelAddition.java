@@ -17,7 +17,7 @@ public class ModelAddition {
         String matchDate = null;
     }
 
-    public ModelAddition(int teamFirst, int teamSecond, int[] fpScore, int[] spScore, String matchDate) {
+    ModelAddition(int teamFirst, int teamSecond, int[] fpScore, int[] spScore, String matchDate) {
         setTeamFirst(teamFirst);
         setTeamSecond(teamSecond);
         setFpScore(fpScore);
