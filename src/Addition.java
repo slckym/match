@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -70,7 +69,7 @@ public class Addition extends JFrame {
         setVisible(false);
     }
 
-    private void validateMatchAddition() {
+    private void validateMatchAddition() throws Exception {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
             Helper.showDialog("Select different team");
@@ -95,48 +94,25 @@ public class Addition extends JFrame {
             dtpMatchDate.getTimePicker().requestFocus();
 
         } else {
-            insertMatchAddition();
-        }
-    }
-
-    private void insertMatchAddition() {
-        PreparedStatement state = null;
-        int rs = 0;
-        try {
             int teamFirstID = Database.getTeamId(Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString());
             int teamSecondID = Database.getTeamId(Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString());
 
-            int fpTeamFirst = Integer.parseInt(txtFPTeamFirst.getText());
-            int fpTeamSecond = Integer.parseInt(txtFPTeamSecond.getText());
+            int[] fpScore = {
+                    Integer.parseInt(txtFPTeamFirst.getText()),
+                    Integer.parseInt(txtFPTeamSecond.getText())
+            };
 
-            int spTeamFirst = Integer.parseInt(txtSPTeamFirst.getText());
-            int spTeamSecond = Integer.parseInt(txtSPTeamSecond.getText());
+            int[] spScore = {
+                    Integer.parseInt(txtSPTeamFirst.getText()),
+                    Integer.parseInt(txtSPTeamSecond.getText())
+            };
 
             String date = String.format("%s %s", dtpMatchDate.getDatePicker().toString(), dtpMatchDate.getTimePicker().getText());
+            ModelAddition insertMatch = new ModelAddition(teamFirstID, teamSecondID, fpScore, spScore, date);
 
-            String query = String.format(
-                    "INSERT INTO match_additions (team1_id, team2_id, fp_team1_score, fp_team2_score, sp_team1_score, sp_team2_score, ms_team1, ms_team2, match_date)"
-                            + " VALUES( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
-                    teamFirstID, teamSecondID, fpTeamFirst, fpTeamSecond, spTeamFirst, spTeamSecond,
-                    (fpTeamFirst + spTeamFirst), (fpTeamSecond + spTeamSecond), date);
-
-            Database db = new Database();
-            state = db.connection.prepareStatement(query);
-            rs = state.executeUpdate();
-
-            if (rs > 0) {
+            if (insertMatch.save()) {
                 Helper.showDialog("Match added!");
                 clearInput();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } finally {
-            if (state != null) {
-                try {
-                    state.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         }
     }
