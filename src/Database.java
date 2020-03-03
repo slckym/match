@@ -116,4 +116,37 @@ class Database {
 
         return db.connection.prepareStatement(query);
     }
+
+    static int forgetPassword(String username, String answer1, String answer2) throws SQLException {
+        Database db = new Database();
+        String query = String.format("SELECT * FROM users WHERE username = '%s' AND answer1 = '%s' AND answer2 = '%s'", username, answer1, answer2);
+        var statement = db.connection.prepareStatement(query);
+
+        try (ResultSet result = statement.executeQuery()) {
+            if (result.next()) {
+                return Integer.parseInt(result.getString("id"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            statement.close();
+        }
+
+        return 0;
+    }
+
+    public static boolean updatePassword(String username, String password) throws SQLException {
+        Database db = new Database();
+        String query = String.format("UPDATE users SET password = '%s' WHERE username = '%s'", password, username);
+        var statement = db.connection.prepareStatement(query);
+        try{
+            int resultSet = statement.executeUpdate();
+            return resultSet > 0;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            statement.close();
+            db.connection.close();
+        }
+
+        return false;
+    }
 }

@@ -11,6 +11,7 @@ public class Login extends JFrame {
     private JLabel lblUsername;
     private JLabel lblPassword;
     private JPanel pnlLogin;
+    private JButton forgotYourPasswordButton;
 
     private Login() {
         initialize();
@@ -27,7 +28,7 @@ public class Login extends JFrame {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static void visible(boolean b) {
+    static void visible(boolean b) {
         Login login = new Login();
         login.setVisible(true);
     }
@@ -36,7 +37,7 @@ public class Login extends JFrame {
         setTitle("Login");
         setContentPane(pnlLogin);
         setResizable(false);
-        setBounds(100, 100, 320, 155);
+        setBounds(100, 100, 320, 175);
         Helper.centreWindow(this);
 
         // call onCancel() when cross is clicked
@@ -63,6 +64,9 @@ public class Login extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        });
+        forgotYourPasswordButton.addActionListener(actionEvent -> {
+            ForgetPassword.visible(true);
         });
     }
 

@@ -19,13 +19,7 @@ class Helper {
     }
 
     static void showDialog(@SuppressWarnings("SameParameterValue") String message) {
-        JOptionPane.showMessageDialog(
-                ((Supplier<JDialog>) () -> {
-                    final JDialog dialog = new JDialog();
-                    dialog.setAlwaysOnTop(true);
-                    return dialog;
-                }).get()
-                , message);
+        JOptionPane.showMessageDialog(null, message);
     }
 
     static void fillCombobox(JComboBox cmb) throws SQLException {
