@@ -140,7 +140,7 @@
                     </constraints>
                     <properties>
                       <font size="18" style="1"/>
-                      <text value="3.5 Upper Down"/>
+                      <text value="2.5 Upper Down"/>
                     </properties>
                   </component>
                   <component id="eee5b" class="javax.swing.JLabel" binding="lbl35UpperDown">

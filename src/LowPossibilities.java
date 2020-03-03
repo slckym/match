@@ -105,13 +105,13 @@ public class LowPossibilities extends JFrame {
 
             totalRows = teamFirstTotalWins + teamSecondTotalWins + totalReciprocal;
             totalGoals = teamFirstTotalGoals + teamSecondTotalGoals;
-            if ((totalGoals / totalRows) < 2) {
+            if ((totalGoals / totalRows) < 1) {
                 lbl15UpperDown.setText("Down");
             } else {
                 lbl15UpperDown.setText("Up");
             }
 
-            if ((totalGoals / totalRows) < 4) {
+            if ((totalGoals / totalRows) < 3) {
                 lbl35UpperDown.setText("Down");
             } else {
                 lbl35UpperDown.setText("Up");
