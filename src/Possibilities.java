@@ -1,25 +1,34 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Possibilities extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
+public class Possibilities extends JFrame {
+    private JPanel pnlPossibilities;
+    private JButton btnHighPossibilities;
+    private JButton btnLowPossibilities;
 
     public Possibilities() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        initialize();
+    }
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
+    private void initialize() {
+        setContentPane(pnlPossibilities);
+        setTitle("HighPossibilities");
+        setBounds(100, 100, 250, 200);
+        Helper.centreWindow(this);
+
+        btnHighPossibilities.addActionListener(e -> {
+            try {
+                HighPossibilities.visible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
+        btnLowPossibilities.addActionListener(e -> {
+            try {
+                LowPossibilities.visible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
 
@@ -32,16 +41,18 @@ public class Possibilities extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
+        pnlPossibilities.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
+    @SuppressWarnings("SameParameterValue")
+    static void visible(boolean b) throws Exception {
+        Possibilities dialog = new Possibilities();
+        dialog.setVisible(b);
     }
 
     private void onCancel() {
@@ -49,10 +60,7 @@ public class Possibilities extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        Possibilities dialog = new Possibilities();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+    public static void main(String[] args) throws Exception {
+        Possibilities.visible(true);
     }
 }

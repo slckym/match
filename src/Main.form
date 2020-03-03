@@ -33,7 +33,7 @@
             </constraints>
             <properties>
               <margin top="10" left="10" bottom="10" right="10"/>
-              <text value="HighPossibilities"/>
+              <text value="Possibilities"/>
             </properties>
           </component>
           <component id="c0a41" class="javax.swing.JButton" binding="btnCalender">

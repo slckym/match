@@ -177,5 +177,4 @@ public class HighPossibilities extends JFrame {
         lbl35UpperDown.setText("Down");
         lblOddOrEven.setText("Even");
     }
-
 }

@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -24,7 +26,7 @@ public class Main extends JFrame {
         });
         btnPossibilities.addActionListener(actionEvent -> {
             try {
-                HighPossibilities.visible(true);
+                Possibilities.visible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }
