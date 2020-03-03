@@ -24,7 +24,7 @@ public class Main extends JFrame {
         });
         btnPossibilities.addActionListener(actionEvent -> {
             try {
-                Possibilities.visible(true);
+                HighPossibilities.visible(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

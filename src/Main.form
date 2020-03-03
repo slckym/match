@@ -33,7 +33,7 @@
             </constraints>
             <properties>
               <margin top="10" left="10" bottom="10" right="10"/>
-              <text value="Possibilities"/>
+              <text value="HighPossibilities"/>
             </properties>
           </component>
           <component id="c0a41" class="javax.swing.JButton" binding="btnCalender">
@@ -53,7 +53,7 @@
               <alignmentY value="0.0"/>
               <autoscrolls value="false"/>
               <margin top="10" left="10" bottom="10" right="10"/>
-              <text value="League"/>
+              <text value="League Standing"/>
             </properties>
           </component>
         </children>

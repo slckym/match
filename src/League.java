@@ -94,7 +94,7 @@ public class League extends JFrame {
 
     private void initialize() {
         setContentPane(pnlLeague);
-        setTitle("League");
+        setTitle("League Standing");
         setBounds(100, 100, 750, 400);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class Possibilities extends JFrame {
+public class LowPossibilities extends JFrame {
     private JPanel pnlPossibilities;
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
@@ -30,7 +30,7 @@ public class Possibilities extends JFrame {
     private JLabel lblEquality;
     private JLabel lblCmbTeamFirst;
 
-    public Possibilities() throws Exception {
+    public LowPossibilities() throws Exception {
         initialize();
         try {
             Helper.fillCombobox(cmbTeamFirst);
@@ -50,12 +50,12 @@ public class Possibilities extends JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        Possibilities.visible(true);
+        LowPossibilities.visible(true);
     }
 
     @SuppressWarnings("SameParameterValue")
     static void visible(boolean b) throws Exception {
-        Possibilities dialog = new Possibilities();
+        LowPossibilities dialog = new LowPossibilities();
         dialog.setVisible(b);
     }
 
@@ -148,7 +148,7 @@ public class Possibilities extends JFrame {
 
     private void initialize() {
         setContentPane(pnlPossibilities);
-        setTitle("Possibilities");
+        setTitle("LowPossibilities");
         setBounds(100, 100, 530, 350);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
