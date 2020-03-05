@@ -99,7 +99,7 @@ class Database {
 
     static PreparedStatement matchResults(String teamFirst, String teamSecond) throws Exception {
         Database db = new Database();
-        String query = "SELECT ma.id, ma.ms_team1, ma.ms_team2, team1.team_name AS team1_name, team2.team_name AS team2_name " +
+        String query = "SELECT ma.id, ma.*, team1.team_name AS team1_name, team2.team_name AS team2_name " +
                 "FROM match_additions AS ma " +
                 "LEFT JOIN teams AS team1 ON team1.id = ma.team1_id " +
                 "LEFT JOIN teams AS team2 ON team2.id = ma.team2_id ";

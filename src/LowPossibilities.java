@@ -13,22 +13,15 @@ public class LowPossibilities extends JFrame {
     private JComboBox cmbTeamFirst;
     private JComboBox cmbTeamSecond;
     private JButton btnResult;
-    private JLabel lblCmbTeamSecond;
-    private JLabel lblTeamFirst;
-    private JLabel lbl15UpperDown;
-    private JLabel lbl35UpperDown;
+    private JLabel lblTeamSecond;
+    private JLabel lbl25UpperDown;
+    private JLabel lblHandicap;
     private JTabbedPane tabResults;
     private JTable tblHistory;
-    private JLabel lblOddOrEven;
-    private JLabel lblTotalGoals;
-    private JLabel lblReciprocal;
-    private JLabel lblTeamFirstName;
-    private JLabel lblTeamSecondName;
-    private JLabel lblTeamFirstPercent;
-    private JLabel lblTeamSecondPercent;
-    private JLabel lblResult;
-    private JLabel lblEquality;
-    private JLabel lblCmbTeamFirst;
+    private JLabel lblFirstPeriod;
+    private JLabel lblMoreGoal;
+    private JLabel lblSecondPeriod;
+    private JLabel lblTeamFirst;
 
     public LowPossibilities() throws Exception {
         initialize();
@@ -63,8 +56,8 @@ public class LowPossibilities extends JFrame {
 
         if (cmbTeamFirst.getSelectedIndex() == cmbTeamSecond.getSelectedIndex()) {
             Helper.showDialog("Select different team");
-            lblCmbTeamSecond.setForeground(Color.red);
-            lblCmbTeamFirst.setForeground(Color.red);
+            lblTeamSecond.setForeground(Color.red);
+            lblTeamFirst.setForeground(Color.red);
             cmbTeamSecond.requestFocus();
         } else {
             this.getPossibilities();
@@ -77,65 +70,105 @@ public class LowPossibilities extends JFrame {
                 teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
         PreparedStatement state = Database.matchResults(teamFirst, teamSecond);
         try (ResultSet rs = state.executeQuery()) {
-            int totalRows = 0, teamFirstTotalGoals = 0, teamSecondTotalGoals = 0, teamFirstTotalWins = 0, teamSecondTotalWins = 0, totalReciprocal = 0, totalGoals = 0;
+            int totalFPRows = 0,
+                totalSPRows = 0,
+                teamFPFirstTotalGoals = 0,
+                teamFPSecondTotalGoals = 0,
+                teamFPFirstTotalWins = 0,
+                teamFPSecondTotalWins = 0,
+                totalFPReciprocal = 0,
+                totalFPGoals = 0,
+                teamSPFirstTotalGoals = 0,
+                teamSPSecondTotalGoals = 0,
+                teamSPFirstTotalWins = 0,
+                teamSPSecondTotalWins = 0,
+                totalSPReciprocal = 0,
+                totalSPGoals = 0;
             while (rs.next()) {
                 if (rs.getString("team1_name").equals(teamFirst)) {
-                    teamFirstTotalGoals += rs.getInt("ms_team1");
-                    teamSecondTotalGoals += rs.getInt("ms_team2");
-                    if (rs.getInt("ms_team1") > rs.getInt("ms_team2")) {
-                        teamFirstTotalWins++;
-                    } else if (rs.getInt("ms_team1") < rs.getInt("ms_team2")) {
-                        teamSecondTotalWins++;
+                    teamFPFirstTotalGoals += rs.getInt("fp_team1_score");
+                    teamFPSecondTotalGoals += rs.getInt("fp_team2_score");
+
+                    if (rs.getInt("fp_team1_score") > rs.getInt("fp_team2_score")) {
+                        teamFPFirstTotalWins++;
+                    } else if (rs.getInt("fp_team1_score") < rs.getInt("fp_team2_score")) {
+                        teamFPSecondTotalWins++;
                     } else {
-                        totalReciprocal++;
+                        totalFPReciprocal++;
                     }
                 } else {
-                    teamFirstTotalGoals += rs.getInt("ms_team2");
-                    teamSecondTotalGoals += rs.getInt("ms_team1");
-                    if (rs.getInt("ms_team2") > rs.getInt("ms_team1")) {
-                        teamFirstTotalWins++;
-                    } else if (rs.getInt("ms_team2") < rs.getInt("ms_team1")) {
-                        teamSecondTotalWins++;
+                    teamFPFirstTotalGoals += rs.getInt("fp_team2_score");
+                    teamFPSecondTotalGoals += rs.getInt("fp_team1_score");
+                    if (rs.getInt("fp_team2_score") > rs.getInt("fp_team1_score")) {
+                        teamFPFirstTotalWins++;
+                    } else if (rs.getInt("fp_team2_score") < rs.getInt("fp_team1_score")) {
+                        teamFPSecondTotalWins++;
                     } else {
-                        totalReciprocal++;
+                        totalFPReciprocal++;
                     }
                 }
 
+                if (rs.getString("team1_name").equals(teamFirst)) {
+                    teamSPFirstTotalGoals += rs.getInt("sp_team1_score");
+                    teamSPSecondTotalGoals += rs.getInt("sp_team2_score");
+
+                    if (rs.getInt("sp_team1_score") > rs.getInt("sp_team2_score")) {
+                        teamSPFirstTotalWins++;
+                    } else if (rs.getInt("sp_team1_score") < rs.getInt("sp_team2_score")) {
+                        teamSPSecondTotalWins++;
+                    } else {
+                        totalSPReciprocal++;
+                    }
+                } else {
+                    teamSPFirstTotalGoals += rs.getInt("sp_team2_score");
+                    teamSPSecondTotalGoals += rs.getInt("sp_team1_score");
+                    if (rs.getInt("sp_team2_score") > rs.getInt("sp_team1_score")) {
+                        teamSPFirstTotalWins++;
+                    } else if (rs.getInt("sp_team2_score") < rs.getInt("sp_team1_score")) {
+                        teamSPSecondTotalWins++;
+                    } else {
+                        totalSPReciprocal++;
+                    }
+                }
             }
 
-            totalRows = teamFirstTotalWins + teamSecondTotalWins + totalReciprocal;
-            totalGoals = teamFirstTotalGoals + teamSecondTotalGoals;
-            if ((totalGoals / totalRows) < 1) {
-                lbl15UpperDown.setText("Down");
+            totalFPRows = teamFPFirstTotalWins + teamFPSecondTotalWins + totalFPReciprocal;
+            totalFPGoals = teamFPFirstTotalGoals + teamFPSecondTotalGoals;
+
+            totalSPRows = teamSPFirstTotalWins + teamSPSecondTotalWins + totalSPReciprocal;
+            totalSPGoals = teamSPFirstTotalGoals + teamSPSecondTotalGoals;
+
+
+
+            if (((totalFPGoals + totalSPGoals) / (totalFPRows + totalSPRows)) < 2) {
+                lbl25UpperDown.setText("Down");
             } else {
-                lbl15UpperDown.setText("Up");
+                lbl25UpperDown.setText("Up");
             }
 
-            if ((totalGoals / totalRows) < 3) {
-                lbl35UpperDown.setText("Down");
+            if (teamFPFirstTotalWins > teamFPSecondTotalWins) {
+                lblFirstPeriod.setText(cmbTeamFirst.getSelectedItem().toString());
             } else {
-                lbl35UpperDown.setText("Up");
+                lblFirstPeriod.setText(cmbTeamSecond.getSelectedItem().toString());
             }
 
-            if (totalGoals % 2 == 0) {
-                lblOddOrEven.setText("Even");
+            if (teamSPFirstTotalWins > teamSPSecondTotalWins) {
+                lblSecondPeriod.setText(cmbTeamFirst.getSelectedItem().toString());
             } else {
-                lblOddOrEven.setText("Odd");
+                lblSecondPeriod.setText(cmbTeamSecond.getSelectedItem().toString());
             }
 
-            String calculatedTotalGoals = String.valueOf(totalGoals / totalRows);
+            if (totalFPGoals - totalSPGoals >= 3) {
+                lblHandicap.setText("Yes");
+            } else {
+                lblHandicap.setText("No");
+            }
 
-            int reciprocalPercent = (100 / totalRows) * totalReciprocal,
-                    teamFirstWinPercent = (100 / totalRows) * teamFirstTotalWins,
-                    teamSecondWinPercent = (100 / totalRows) * teamSecondTotalWins;
-
-            lblReciprocal.setText((teamFirstTotalGoals * teamSecondTotalGoals == 0) ? "Yes" : "No");
-            lblTeamFirstName.setText(teamFirst);
-            lblTeamSecondName.setText(teamSecond);
-            lblTeamFirstPercent.setText(teamFirstWinPercent + "%");
-            lblTeamSecondPercent.setText(teamSecondWinPercent + "%");
-            lblTotalGoals.setText(calculatedTotalGoals);
-            lblEquality.setText(reciprocalPercent + "%");
+            if (totalFPGoals < totalSPGoals) {
+                lblMoreGoal.setText("Second Period");
+            } else {
+                lblMoreGoal.setText("First Period");
+            }
 
         } catch (Exception e) {
             state.close();
@@ -148,7 +181,7 @@ public class LowPossibilities extends JFrame {
 
     private void initialize() {
         setContentPane(pnlPossibilities);
-        setTitle("LowPossibilities");
+        setTitle("Low Possibilities");
         setBounds(100, 100, 530, 350);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -166,16 +199,11 @@ public class LowPossibilities extends JFrame {
     private void clearResults() {
         String teamFirst = Objects.requireNonNull(cmbTeamFirst.getSelectedItem()).toString(),
                 teamSecond = Objects.requireNonNull(cmbTeamSecond.getSelectedItem()).toString();
-        lblReciprocal.setText("No");
-        lblTeamFirstName.setText(teamFirst);
-        lblTeamSecondName.setText(teamSecond);
-        lblTeamFirstPercent.setText("0%");
-        lblTeamSecondPercent.setText("0%");
-        lblTotalGoals.setText("0");
-        lblEquality.setText("0%");
-        lbl15UpperDown.setText("Down");
-        lbl35UpperDown.setText("Down");
-        lblOddOrEven.setText("Even");
+        lblSecondPeriod.setText("-");
+        lblMoreGoal.setText("-");
+        lbl25UpperDown.setText("-");
+        lblHandicap.setText("-");
+        lblFirstPeriod.setText("-");
     }
 
 }
